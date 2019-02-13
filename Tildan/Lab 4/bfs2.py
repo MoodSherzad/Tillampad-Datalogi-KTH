@@ -3,7 +3,6 @@ from bintreeFile import Bintree
 svenska = Bintree()  # Skapar ett tomt binärt sökträd för de svenska orden
 gamla = Bintree()  # Skapar ett tomt binärt sökträd för de gamla orden
 
-'''Sätter in alla orden i filen till det binära sökträdet'''
 with open("word3.txt", "r", encoding="utf-8") as svenskfil:
     for rad in svenskfil:
         ordet = rad.strip()                # Ett trebokstavsord per rad
@@ -12,13 +11,6 @@ with open("word3.txt", "r", encoding="utf-8") as svenskfil:
         else:
             svenska.put(ordet)             # in i sökträdet
 
-
-'''
-Går igenom alla barn till ordet man skickar in, om ett av barnen finns med i den svenska ordfilen och
-inte finns med i gamla binära sökträdet kollar den om barnet är det ordet vi sökte efter, om inte lägger
-vi till det ordet till vår länkade lista samt till gamla. Om det är det ordet vi sökte efter raisar vi
-SolutionFound vilket är vår egna exception som avslutar loopen i main()-funktionen.
-'''
 
 
 def makechildren(nod, slutord, q):
