@@ -17,30 +17,13 @@ def makechildren(startord):
             else:
                 if i == 0:
                     new_word = letter + startord[1] + startord [2]
-                    #print(new_word)
-                    if new_word in svenska and new_word not in gamla:
-                        gamla.put(new_word)
-                        print(new_word)
-                    else:
-                        pass
                 elif i == 1:
                     new_word = startord[0] + letter + startord[2]
-
-                    if new_word in svenska and new_word not in gamla:
-                        gamla.put(new_word)
-                        print(new_word)
-                    else:
-                        pass
                 elif i == 2:
                     new_word = startord[0] + startord[1] + letter
-
-                    if new_word in svenska and new_word not in gamla:
-                        gamla.put(new_word)
-                        print(new_word)
-                    else:
-                        pass
-                else:
-                    pass
+                if new_word in svenska and new_word not in gamla:
+                    gamla.put(new_word)
+                    print(new_word)
 
 def main():
     startord = input("Ange startord: ")
