@@ -1,5 +1,14 @@
+class Song:
+    def __init__(self, track_id, artistnamn, sångtitel, låtlängd, år):
+        self.track_id = track_id
+        self.artistnamn = artistnamn
+        self.sångtitel = sångtitel
+        self.låtlängd = låtlängd
+        self.är = år
 
-
+    def __lt__(self, other):
+        return self.track_id < other.track_id
+#artistid	artistnamn	sångtitel	låtlängd	år
 
 def readfile(file_name):
     LIST_SONG = []
