@@ -23,13 +23,14 @@ def readfile(file_name):
 def nstorsta2(x, n): #x är listan och n är vilket tal vi vill ha
     list1 = []
     for i in range(n):
-        list1.append(x.pop(x.index(max(x))))
-    print(list1[-1])
-    print(list1)
+        list1.append(x.pop(max(x)))
+    print(list1[-1].låtlängd)
 
 
 filename = "testlistan.txt" #behövs sen
 lista, dictionary = readfile(filename) #behövs sen
 
-testlistan = [2,34,5,67,88,7,65]
-nstorsta2(testlistan,3) #funktionen tar in testlistan och spottar ut 3 största elementet
+
+nstorsta2(dictionary,3) 
+nstorsta2(dictionary,2)
+nstorsta2(dictionary,1)
