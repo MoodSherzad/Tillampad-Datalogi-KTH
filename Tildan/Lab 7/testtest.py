@@ -16,8 +16,8 @@ def hashfunc(key):        #Vår egenskriven hashfunktion som returnerna våra "k
     n = len(key)
     keySum = 0 
     for x in range(n):
-        keySum = keySum + ord(key[x])
+        keySum = keySum + ord(key[x]) #tar ascii värdet av varje bokstav och plussar ihop dem
         print(keySum)
-    print (keySum%11)
+    print (keySum%11) # modulus 11 men vi kör mudulus self.size i huvudfilen
 
 hashfunc("hejj")
