@@ -48,9 +48,9 @@ class HashTabell:
         raise KeyError   
 
 
-    def _hashfunc(self, key):        #Vår egenskriven hashfunktion som returnerna våra "key's" till Hashtabellen.
-        key1 = key[::-1]
-        hash_sum = 0
-        for index,char in enumerate(key1):
-            hash_sum = hash_sum + 31**(index+1) * ord(char)
-        return hash_sum%self._size
+    def hashfunc(self,key):        #Vår egenskriven hashfunktion som returnerna våra "key's" till Hashtabellen.
+        n = len(key)
+        keySum = 0 
+        for x in range(n):
+            keySum = keySum + ord(key[x])
+        return keySum%self.size)
