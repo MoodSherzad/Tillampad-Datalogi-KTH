@@ -18,8 +18,8 @@ class Song:
         self.låtlängd = låtlängd
         self.är = år
 
-def readfile(file, n): 
-    with open(file, encoding='utf-8') as text:
+def readfile(fil, n): 
+    with open(fil, encoding='utf-8') as text:
         for r in text:
             rad = r.strip('\n').split('\t')
             song = Song(rad[0], rad[1], rad[2], rad[3], rad[4])
