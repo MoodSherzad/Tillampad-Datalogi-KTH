@@ -32,15 +32,18 @@ class HashTabell:
 
 
 
-    def omformatera(self):                       #Funktion som hjälper oss att göra våran Hashtabell större.
+   
+   
+   
+    def omformatera(self):                       # Done #Funktion som hjälper oss att göra våran Hashtabell större.
         self._table = self._table + [None] * self._size
         self._size = self._size * 2
 
     def hämta(self, nyckel1):                    #Funktion som hjälper oss att plocka ut de vi eftersöka från vår Hashtabell.
-        index = self._hashfunc(nyckel1)
+        index = self._hashfunc(nyckel1) #index i hashtabeln
         attempts = 0
         new_index = index - 1
-        while attempts <= self._size:
+        while attempts <= self._size: # så länge försök är mindre eller lika med storleken
             new_index = (new_index + 1) % self._size
             if self._table[new_index] is not None and self._table[new_index].key == key1:
                 return self._table[new_index].value
@@ -48,7 +51,7 @@ class HashTabell:
         raise KeyError   
 
 
-    def hashfunc(self,key):        #Vår egenskriven hashfunktion som returnerna våra "key's" till Hashtabellen.
+    def _hashfunc(self,key):        #Done #Vår egenskriven hashfunktion som returnerna våra "key's" till Hashtabellen.
         n = len(key)
         keySum = 0 
         for x in range(n):
