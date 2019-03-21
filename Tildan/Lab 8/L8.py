@@ -3,6 +3,7 @@ from linkedQFile import *
 class Syntaxfel(Exception):
     pass
 
+
 def molecule(indata):
     q = LinkedQ()
     for i in indata:
@@ -12,8 +13,6 @@ def molecule(indata):
 def uppercase(q):
     if q.peek().isupper():
         q.dequeue()
-        lowercase(q)
-        number(q)
     else:
         raise Syntaxfel("En stor bokstav saknas")
 
@@ -36,6 +35,8 @@ def syntax_control(indata):
     q = molecule(indata)
     try:
         uppercase(q)
+        lowercase(q)
+        number(q)
     except Syntaxfel as fel:
         return str(fel)
     return "Formeln följer korrekt syntax!"
