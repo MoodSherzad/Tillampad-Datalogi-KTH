@@ -23,7 +23,6 @@ class LinkedQ:
         x = self.__first.value    # ettan sparas till en variabel
         self.__first = self.__first.next    # tvåan flyttas fram och blir ettan
         return x
-        blabala
 
     def isEmpty(self):  # kollar om listan är tom
         return self.__first is None     # is snabbare än ==
