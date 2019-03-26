@@ -33,4 +33,11 @@ class LinkedQ:
             return self.first.value
         else:
             return None
+    
+    def peekNext(self):
 
+        if self.isEmpty() is False:
+            return self.first.next.value
+        else:
+            return 1
+    

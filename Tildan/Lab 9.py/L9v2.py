@@ -3,6 +3,7 @@ import sys
 import string
 
 q = LinkedQ()
+p = LinkedQ()
 
 par=[]
 
@@ -21,27 +22,16 @@ def storeMolekyl(molekyl):
 
 def readMolekyl():
 	"""<mol>   ::= <group> | <group><mol>"""
-	"""readmol() anropar readgroup() och sedan eventuellt sej själv
-	(men inte om inmatningen är slut eller om den just kommit tillbaka från ett parentesuttryck)"""
-
 	readGrupp()
 	if q.isEmpty():
 		return
-	elif q.peek() == ")":
-		if len(par) < 1:
+	elif q.peek() is ")":
+		if p.isEmpty():
 			raise Syntaxfel("Felaktig gruppstart vid radslutet ") 
 		return
 	else:
 		readMolekyl()
 
-	
-	# if q.isEmpty():
-	# 	if len(par) > 0:
-	# 		raise Syntaxfel("Saknad högerparentes vid radslutet ")
-	# 	return
-	
-	#readMolekyl()
-	#print("readMolekyl klar")
 
 def readGrupp():
 	"""<group> ::= <atom> |<atom><num> | (<mol>) <num>"""
@@ -62,7 +52,9 @@ def readGrupp():
 		return
 
 	elif q.peek() == "(":
-		par.append(q.dequeue())
+		temp = q.dequeue()
+		par.append(temp)
+		p.enqueue(temp) #PATANTESER
 		readMolekyl()
 
 		if q.peek() != ")":
@@ -73,10 +65,13 @@ def readGrupp():
 			raise Syntaxfel("Saknad siffra vid radslutet ")
 		else:
 			par.pop()
-			q.dequeue()
+			p.dequeue()
+			q.dequeue() #PARANTESER
 			if q.isEmpty():
 				raise Syntaxfel("Saknad siffra vid radslutet ")
 			readNum()
+
+			
 	else:
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
 
@@ -133,19 +128,24 @@ def readFormel(molekyl):
 	q = storeMolekyl(molekyl)
 	try:
 		readMolekyl()
-		if len(par) > 0:
+		if p.isEmpty is False:
 			raise Syntaxfel('Saknad högerparentes vid radslutet ')
 		return 'Formeln är syntaktiskt korrekt'
 	except Syntaxfel as error:
 		return str(error) + printQ()
 
-z = ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]
+
+z1 = ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]
+z2 = ["Si(C3(COOH)2)4(H2O)7"]
 def main():
-    for i in z:
+    for i in z2:
         indata = i
         resultat = readFormel(indata)
         print(resultat)
-    
+
+    if p.isEmpty():
+        print("Parantefunktion fungerara")
+
 if __name__ == '__main__':
     main()
 
