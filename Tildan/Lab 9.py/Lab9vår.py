@@ -40,7 +40,7 @@ def readMolekyl(): #NY
 		return
 	elif q.peek() == ")":
 		if len(par) < 1:
-			raise Syntaxfel("Felaktig gruppstart vid radslutet ") 
+			raise Syntaxfel("Felaktig gruppstart vid radslutet1 ") 
 		return
 	else:
 		readMolekyl()
@@ -49,9 +49,9 @@ def readGrupp(): #Ny
 	"""readgroup() anropar antingen readatom() eller läser en parentes och anropar readmol()"""
 
 	if q.isEmpty():
-		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
+		raise Syntaxfel("Felaktig gruppstart vid radslutet3 ")
 	elif q.peek().isdigit():
-		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
+		raise Syntaxfel("Felaktig gruppstart vid radslutet4 ")
 
 	elif q.peek().isalpha():
 		#print("Kallar på readAtom i readGrupp")
@@ -79,7 +79,7 @@ def readGrupp(): #Ny
 				raise Syntaxfel("Saknad siffra vid radslutet ")
 			readNum()
 	else:
-		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
+		raise Syntaxfel("Felaktig gruppstart vid radslutet2 ")
 
 
 def readAtom(): #NY
@@ -159,7 +159,7 @@ def number(q):
 
         else:
             raise Syntaxfel("SyntaxFel3")
-
+"""
 # kollar om molekylen har rätt syntax
 def syntax_control(indata):
     q = molecule(indata)
@@ -171,6 +171,23 @@ def syntax_control(indata):
     except Syntaxfel as fel:
         return str(fel)
     return "Formeln följer korrekt syntax!"
+"""
+def printQ():
+	rest = ""
+	while not q.isEmpty():
+		rest = rest + q.dequeue()
+	return rest
+
+def syntax_control(molekyl):
+	"""<formel>::= <mol> \n"""
+	q = molecule(molekyl)
+	try:
+		readMolekyl()
+		if len(par) > 0:
+			raise Syntaxfel('Saknad högerparentes vid radslutet ')
+		return 'Formeln är syntaktiskt korrekt'
+	except Syntaxfel as error:
+		return str(error) + printQ()
 
 def main():
     indata = input("Skriv en molekyl: ").strip() # kolla om den är tom
