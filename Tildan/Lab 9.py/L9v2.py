@@ -1,26 +1,20 @@
 from linkedQFile import *
-
 import string
-
 q = LinkedQ()
 p = LinkedQ()
-
 atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
-
 
 class Syntaxfel(Exception):
 	pass
 
-
 def storeMolekyl(molekyl):
-	"""Lägger in strängen i kön"""
 	for symbol in molekyl:
 		q.enqueue(symbol)
 	return q
 
-def readMolekyl():
+def readmol():
 	"""<mol>   ::= <group> | <group><mol>"""
-	readGrupp()
+	readgroup()
 	if q.isEmpty():
 		return
 	elif q.peek() is ")":
@@ -28,12 +22,10 @@ def readMolekyl():
 			raise Syntaxfel("Felaktig gruppstart vid radslutet ") 
 		return
 	else:
-		readMolekyl()
+		readmol()
 
-
-def readGrupp():
+def readgroup():
 	"""<group> ::= <atom> |<atom><num> | (<mol>) <num>"""
-
 	if q.isEmpty():
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
 	if q.peek().isdigit():
@@ -44,12 +36,12 @@ def readGrupp():
 		if q.peek() is None:
 			return
 		if q.peek().isdigit():
-			readNum()
+			number()
 		return
 
 	elif q.peek() is "(": #PATANTESER
 		p.enqueue(q.dequeue())
-		readMolekyl()
+		readmol()
 		if not q.peek() is ")":
 			raise Syntaxfel("Saknad högerparentes vid radslutet ")
 				
@@ -61,9 +53,7 @@ def readGrupp():
 			q.dequeue() #PARANTESER
 			if q.isEmpty():
 				raise Syntaxfel("Saknad siffra vid radslutet ")
-			readNum()
-
-			
+			number()			
 	else:
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
 
@@ -82,8 +72,7 @@ def readAtom():
 	else:
 		raise Syntaxfel("Okänd atom vid radslutet ")
 
-
-def readNum(): #FIXAD DELUX
+def number(): #FIXAD DELUX
     if q.peek().isdigit():
         if q.peek() == "0":
             q.dequeue()
@@ -102,8 +91,6 @@ def readNum(): #FIXAD DELUX
     else:
         raise Syntaxfel("Saknad siffra vid radslutet ")
 
-
-
 def firstError(): #FIXAD DELUX
 	notDequeue = ""
 	while not q.isEmpty():
@@ -114,18 +101,25 @@ def readFormel(molekyl): #FIXAD halvt
 	"""<formel>::= <mol> \n"""
 	q = storeMolekyl(molekyl)
 	try:
-		readMolekyl()
+		readmol()
 		if p.isEmpty is False:
 			raise Syntaxfel('Saknad högerparentes vid radslutet ')
 		return 'Formeln är syntaktiskt korrekt'
 	except Syntaxfel as error:
 		return str(error) + firstError()
-
-
+"""
 def main():
     for i in ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]:
         resultat = readFormel(i)
         print(resultat)
+"""
+def main():
+
+	for molekyl in ["#","Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3","H2O)Fe"]:
+		if not molekyl is "#":
+			resultat = readFormel(molekyl)
+			firstError()
+			print(resultat)
 
 if __name__ == '__main__':
     main()
