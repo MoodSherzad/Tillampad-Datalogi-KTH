@@ -27,6 +27,8 @@ class LinkedQ:
     def isEmpty(self):  # kollar om listan är tom
         return self.__first is None     # is snabbare än ==
 
+    def visa(self):
+        return self.value
     def peek(self):
 
         if self.isEmpty() is False:
