@@ -11,7 +11,7 @@ class TestStringMethods(unittest.TestCase):
     
     def test_upper3(self):
         self.assertEqual(readFormel("C(OH4C"), 'Saknad högerparentes vid radslutet ')
-    """
+    """'''
     def test_upper4(self):
         self.assertEqual(readFormel("H2O)Fe"), 'Felaktig gruppstart vid radslutet )Fe') # FEL
     """
