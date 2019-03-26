@@ -1,13 +1,11 @@
 from linkedQFile import *
-import sys
+
 import string
 
 q = LinkedQ()
 p = LinkedQ()
 
-par=[]
-
-ATOMER = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
+atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
 
 
 class Syntaxfel(Exception):
@@ -35,7 +33,6 @@ def readMolekyl():
 
 def readGrupp():
 	"""<group> ::= <atom> |<atom><num> | (<mol>) <num>"""
-	"""readgroup() anropar antingen readatom() eller läser en parentes och anropar readmol()"""
 
 	if q.isEmpty():
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
@@ -43,7 +40,6 @@ def readGrupp():
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
 
 	if q.peek().isalpha():
-		#print("Kallar på readAtom i readGrupp")
 		readAtom()
 		if q.peek() is None:
 			return
@@ -51,20 +47,16 @@ def readGrupp():
 			readNum()
 		return
 
-	elif q.peek() == "(":
-		temp = q.dequeue()
-		par.append(temp)
-		p.enqueue(temp) #PATANTESER
+	elif q.peek() is "(": #PATANTESER
+		p.enqueue(q.dequeue())
 		readMolekyl()
-
-		if q.peek() != ")":
+		if not q.peek() is ")":
 			raise Syntaxfel("Saknad högerparentes vid radslutet ")
 				
 
 		if q.isEmpty():
 			raise Syntaxfel("Saknad siffra vid radslutet ")
 		else:
-			par.pop()
 			p.dequeue()
 			q.dequeue() #PARANTESER
 			if q.isEmpty():
@@ -77,19 +69,15 @@ def readGrupp():
 
 def readAtom():
 	"""<atom>  ::= <LETTER> | <LETTER><letter>"""
-
 	if q.peek().isupper():
-		x = q.dequeue()
-		#print(x, "readAtom stor bokstav")
+		atom = q.dequeue()
+		#print(r, "readAtom stor bokstav")
 	else:
 		raise Syntaxfel("Saknad stor bokstav vid radslutet ")
-
-	if q.peek() != None:
+	if not q.peek() is None:
 		if q.peek().islower():
-			x = x + q.dequeue()
-			#print("Atomen är", x)
-	
-	if x in ATOMER:
+			atom = atom + q.dequeue()
+	if atom in atomLista:
 		return
 	else:
 		raise Syntaxfel("Okänd atom vid radslutet ")
@@ -134,16 +122,10 @@ def readFormel(molekyl): #FIXAD halvt
 		return str(error) + firstError()
 
 
-z1 = ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]
-z2 = ["Si(C3(COOH)2)4(H2O)7"]
 def main():
-    for i in z2:
-        indata = i
-        resultat = readFormel(indata)
+    for i in ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]:
+        resultat = readFormel(i)
         print(resultat)
-
-    if p.isEmpty():
-        print("Parantefunktion fungerara")
 
 if __name__ == '__main__':
     main()
