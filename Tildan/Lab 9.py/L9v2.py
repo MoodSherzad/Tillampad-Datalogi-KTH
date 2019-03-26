@@ -116,13 +116,13 @@ def readNum(): #FIXAD DELUX
 
 
 
-def printQ():
-	rest = ""
+def firstError(): #FIXAD DELUX
+	notDequeue = ""
 	while not q.isEmpty():
-		rest = rest + q.dequeue()
-	return rest
+		notDequeue = notDequeue + q.dequeue()
+	return notDequeue
 
-def readFormel(molekyl):
+def readFormel(molekyl): #FIXAD halvt
 	"""<formel>::= <mol> \n"""
 	q = storeMolekyl(molekyl)
 	try:
@@ -131,7 +131,7 @@ def readFormel(molekyl):
 			raise Syntaxfel('Saknad högerparentes vid radslutet ')
 		return 'Formeln är syntaktiskt korrekt'
 	except Syntaxfel as error:
-		return str(error) + printQ()
+		return str(error) + firstError()
 
 
 z1 = ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]

@@ -11,10 +11,10 @@ class TestStringMethods(unittest.TestCase):
     
     def test_upper3(self):
         self.assertEqual(readFormel("C(OH4C"), 'Saknad högerparentes vid radslutet ')
-"""
+    """
     def test_upper4(self):
         self.assertEqual(readFormel("H2O)Fe"), 'Felaktig gruppstart vid radslutet )Fe') # FEL
-"""
+    """
     def test_upper5(self):
         self.assertEqual(readFormel("H0"), 'För litet tal vid radslutet ')
 
@@ -29,10 +29,10 @@ class TestStringMethods(unittest.TestCase):
     def test_upper9(self):
         self.assertEqual(readFormel("a"), 'Saknad stor bokstav vid radslutet a')
 
-"""
+    """
     def test_upper10(self):
-        self.assertEqual(readFormel("(Cl)2)3"), 'Felaktig gruppstart vid radslutet )3') #FEL
-"""
+            self.assertEqual(readFormel("(Cl)2)3"), 'Felaktig gruppstart vid radslutet )3') #FEL
+    """
     def test_upper11(self):
         self.assertEqual(readFormel(")"), 'Felaktig gruppstart vid radslutet )')
     def test_upper12(self):
