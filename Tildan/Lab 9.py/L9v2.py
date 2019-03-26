@@ -114,7 +114,6 @@ def readNum(): #FIXAD DELUX
     else:
         raise Syntaxfel("Saknad siffra vid radslutet ")
 
-            
 
 
 def printQ():
