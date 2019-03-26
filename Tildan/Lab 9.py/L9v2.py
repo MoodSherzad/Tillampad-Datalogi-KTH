@@ -1,5 +1,6 @@
 from linkedQFile import *
 import string
+import sys
 q = LinkedQ()
 p = LinkedQ()
 atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
@@ -103,23 +104,41 @@ def readFormel(molekyl): #FIXAD halvt
 	try:
 		readmol()
 		if p.isEmpty is False:
-			raise Syntaxfel('Saknad högerparentes vid radslutet ')
-		return 'Formeln är syntaktiskt korrekt'
+			raise Syntaxfel("Saknad högerparentes vid radslutet ")
+		return "Formeln är syntaktiskt korrekt"
 	except Syntaxfel as error:
 		return str(error) + firstError()
 """
 def main():
     for i in ["Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3"]:
-        resultat = readFormel(i)
-        print(resultat)
+        output = readFormel(i)
+        print(output)
 """
-def main():
 
-	for molekyl in ["#","Na", "H2O", "Si(C3(COOH)2)4(H2O)7", "Na332","C(Xx4)5","C(OH4)C","C(OH4C","H2O)Fe", "H02C", "Nacl","(Cl)2)3","H2O)Fe"]:
+
+def main():
+	kattisInput = sys.stdin.readline().strip()
+	if kattisInput != "#":  # hashtag är en stoppkolss
+		output = readFormel(kattisInput)
+		firstError()
+		print(output)
+		q.Empty() #måste rensa känkade listan
+		p.Empty() #måste rensa känkade listan
+		main()
+
+def main1():
+	for molekyl in ["H2O)Fe", "(Cl)2)3"]:
 		if not molekyl is "#":
-			resultat = readFormel(molekyl)
+			output = readFormel(molekyl)
 			firstError()
-			print(resultat)
+			print(output)
+
+def main2(x):
+	q.Empty()
+	p.Empty()
+	output = readFormel(x)
+	firstError()
+	return output
 
 if __name__ == '__main__':
     main()

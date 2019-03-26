@@ -27,6 +27,10 @@ class LinkedQ:
     def isEmpty(self):  # kollar om listan är tom
         return self.first is None     # is snabbare än ==
 
+    def Empty(self):
+        self.first = None
+        self.last = None
+
     def peek(self):
 
         if self.isEmpty() is False:
@@ -40,4 +44,5 @@ class LinkedQ:
             return self.first.next.value
         else:
             return 1
-    
+
+
