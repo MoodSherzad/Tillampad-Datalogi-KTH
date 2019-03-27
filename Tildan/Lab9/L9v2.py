@@ -91,6 +91,7 @@ def number(): #FIXAD DELUX
                     q.dequeue()
                 return
             else:
+                q.dequeue()
                 raise Syntaxfel("För litet tal vid radslutet ")
             
         while q.peek() != None:
