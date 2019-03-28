@@ -109,6 +109,7 @@ def firstError(): #FIXAD DELUX
 	return notDequeue
 
 def readFormel(molekyl): #FIXAD halvt
+	molekyl = molekyl.strip()
 	q = storeMolekyl(molekyl)
 	try:
 		readmol()
@@ -136,8 +137,9 @@ def main():
 		main()
 
 def main1():
-	for molekyl in ["(98(Sg)G(1ScU", "Es(W177Pm3Am8AmHo"]:
+	for molekyl in ["(98(Sg)G(1ScU", "Es(W177Pm3Am8AmHo", "Ha1 "]:
 		if not molekyl is "#":
+			
 			output = readFormel(molekyl)
 			firstError()
 			print(output)
