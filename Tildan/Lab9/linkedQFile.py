@@ -43,6 +43,6 @@ class LinkedQ:
         if self.isEmpty() is False:
             return self.first.next.value
         else:
-            return 1
+            return None
 
 

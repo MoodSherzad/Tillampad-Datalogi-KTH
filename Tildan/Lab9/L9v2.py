@@ -86,11 +86,15 @@ def number(): #FIXAD DELUX
             q.dequeue()
             raise Syntaxfel("För litet tal vid radslutet ")
         elif q.peek() == "1":
-            if q.peekNext().isdigit():
-                while q.peek().isdigit():
-                    q.dequeue()
-                return
-            else:
+            try:
+                if q.peekNext().isdigit():
+                    while q.peek().isdigit():
+                        q.dequeue()
+                        return
+                else:
+                    #q.dequeue()
+                    raise Syntaxfel("För litet tal vid radslutet ")
+            except:
                 q.dequeue()
                 raise Syntaxfel("För litet tal vid radslutet ")
             
@@ -137,7 +141,7 @@ def main():
 		main()
 
 def main1():
-	for molekyl in ["(98(Sg)G(1ScU", "Es(W177Pm3Am8AmHo", "Ha1 "]:
+	for molekyl in ["He1 "]:
 		if not molekyl is "#":
 			
 			output = readFormel(molekyl)
