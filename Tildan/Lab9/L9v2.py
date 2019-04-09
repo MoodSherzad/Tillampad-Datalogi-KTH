@@ -23,7 +23,6 @@ def storeMolekyl(molekyl):
 	return q
 
 def readmol():
-
 	readgroup()
 	if q.isEmpty():
 		return
@@ -37,10 +36,10 @@ def readmol():
 def readgroup():
 	if q.isEmpty():
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
+
 	if q.peek().isdigit():
 		raise Syntaxfel("Felaktig gruppstart vid radslutet ")
 		
-
 	if q.peek().isalpha():
 		readAtom()
 		if q.peek() is None:
@@ -57,7 +56,6 @@ def readgroup():
 		if not q.peek() is ")":
 			raise Syntaxfel("Saknad högerparentes vid radslutet ")
 				
-
 		if q.isEmpty():
 			raise Syntaxfel("Saknad siffra vid radslutet ")
 		else:
@@ -117,7 +115,7 @@ def firstError(): #FIXAD DELUX
 
 def readFormel(molekyl): #FIXAD halvt
 	molekyl = molekyl.strip()
-	q = storeMolekyl(molekyl)
+	storeMolekyl(molekyl)
 	try:
 		readmol()
 		if p.isEmpty is False:
@@ -134,7 +132,7 @@ def main():
 
 
 def main():
-	kattisInput = sys.stdin.readline().strip()
+	kattisInput = sys.stdin.readline().strip() # väntar input
 	if kattisInput != "#":  # hashtag är en stoppkolss
 		output = readFormel(kattisInput)
 		firstError()
@@ -164,3 +162,4 @@ if __name__ == '__main__':
 
 
 
+# Länk till godkänd kattis: https://kth.kattis.com/submissions/4000040

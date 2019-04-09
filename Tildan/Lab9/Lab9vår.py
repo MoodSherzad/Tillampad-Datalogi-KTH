@@ -101,8 +101,6 @@ def readAtom(): #NY
 	else:
 		raise Syntaxfel("Okänd atom vid radslutet ")
 
-
-
 # Funktion molecule ska lagra alla symboler i en länkad lista
 def molecule(indata):
     q = LinkedQ()
@@ -179,8 +177,7 @@ def printQ():
 	return rest
 
 def syntax_control(molekyl):
-	"""<formel>::= <mol> \n"""
-	q = molecule(molekyl)
+	molecule(molekyl)
 	try:
 		readMolekyl()
 		if len(par) > 0:
