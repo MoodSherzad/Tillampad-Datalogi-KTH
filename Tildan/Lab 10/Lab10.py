@@ -1,7 +1,8 @@
 from linkedQFile import *
-import string
 import sys
+import string
 from molgrafik import *
+#from hashtest import *
 q = LinkedQ()
 parantes = LinkedQ()
 atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
@@ -144,15 +145,31 @@ def readFormel(molekyl): #FIXAD halvt
 
 
 def main():
-    in_data = input("Ange molekylen: ") # väntar input
-    mg = Molgrafik
+    in_data = "Si(C3(COOH)2)4(H2O)7" # väntar input
+    mg = Molgrafik()
     if in_data != "q":  # hashtag är en stoppkolss
         p = readFormel(in_data)
         firstError()
+        print(p.atom) #Si
+        print(p.next.atom)#()
+        print(p.next.num)#4
+        print(p.next.down.atom)#C
+        print(p.next.down.num)#3
+        print(p.next.down.next.atom)#()
+        print(p.next.down.next.num)#2
+        print(p.next.down.next.down.atom) #C
+        print(p.next.down.next.down.next.atom) #O
+        print(p.next.down.next.down.next.next.atom)#O
+        print(p.next.down.next.down.next.next.next.atom)#H
+        print(p.next.next.atom)#()
+        print(p.next.next.num)#7
+        print(p.next.next.down.atom)#H
+        print(p.next.next.down.num)#2
+        print(p.next.next.down.next.atom)#O
         mg.show(p)
         q.Empty() #måste rensa känkade listan
         parantes.Empty() #måste rensa känkade listan
-        main()
+        
 
 
 if __name__ == '__main__':
