@@ -3,7 +3,7 @@ import string
 import sys
 from molgrafik import *
 q = LinkedQ()
-p = LinkedQ()
+parantes = LinkedQ()
 atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
  'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr',
   'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 
@@ -15,7 +15,6 @@ atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
     'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 
 	'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
 
-atomer = []
 class Syntaxfel(Exception):
 	pass
 
@@ -30,7 +29,7 @@ def readmol():
     if q.isEmpty():
         return mol_objekt
     elif q.peek() is ")":
-        if p.isEmpty():
+        if parantes.isEmpty():
             raise Syntaxfel("Felaktig gruppstart vid radslutet ") 
         return mol_objekt
     else:
@@ -52,9 +51,10 @@ def readgroup():
         if q.peek().isdigit():
             antal = int(number())
             rut_objekt.num = antal
+            
 
     elif q.peek() is "(": #PATANTESER
-        p.enqueue(q.dequeue())
+        parantes.enqueue(q.dequeue())
         if q.peek().isdigit():
             raise Syntaxfel("Felaktig gruppstart vid radslutet ")
         rut_objekt.down = readmol()
@@ -64,7 +64,7 @@ def readgroup():
         if q.isEmpty():
             raise Syntaxfel("Saknad siffra vid radslutet ")
         else:
-            p.dequeue()
+            parantes.dequeue()
             q.dequeue() #PARANTESER
             if q.isEmpty():
                 raise Syntaxfel("Saknad siffra vid radslutet ")
@@ -84,35 +84,42 @@ def readAtom():
 		if q.peek().islower():
 			atom = atom + q.dequeue()
 	if atom in atomLista:
-		atomer.append(atom)
-		return
+		return atom
 	else:
 		raise Syntaxfel("Okänd atom vid radslutet ")
 
 def number(): #FIXAD DELUX
+    n = ""
+    lista = []
     if q.peek().isdigit():
         if q.peek() == "0":
-            q.dequeue()
+            lista.append(q.dequeue())
             raise Syntaxfel("För litet tal vid radslutet ")
         elif q.peek() == "1":
             try:
                 if q.peekNext().isdigit():
                     while q.peek().isdigit():
-						# ÄNDRING
-                        atomer.append(q.dequeue())
+                        lista.append(q.dequeue())
+
                         break
                 else:
                     #q.dequeue()
                     raise Syntaxfel("För litet tal vid radslutet ")
             except:
-                q.dequeue()
+                lista.append(q.dequeue())
                 raise Syntaxfel("För litet tal vid radslutet ")
             
         while q.peek() != None:
+        
             if q.peek().isdigit():
-                q.dequeue()
+                lista.append(q.dequeue())
+
             else:
-                return
+                break
+        for i in range(len(lista)):
+            n = n + lista[i]
+
+        return n
     else:
         raise Syntaxfel("Saknad siffra vid radslutet ")
 
@@ -127,7 +134,7 @@ def readFormel(molekyl): #FIXAD halvt
     storeMolekyl(molekyl)
     try:
         mol_objekt = readmol()
-        if p.isEmpty is False:
+        if parantes.isEmpty is False:
             raise Syntaxfel("Saknad högerparentes vid radslutet ")
         print("Formeln är syntaktiskt korrekt")
         return mol_objekt
@@ -140,12 +147,11 @@ def main():
     in_data = input("Ange molekylen: ") # väntar input
     mg = Molgrafik
     if in_data != "q":  # hashtag är en stoppkolss
-        mol_objekt = readFormel(in_data)
-
+        p = readFormel(in_data)
         firstError()
-        mg.show(mol_objekt)
+        mg.show(p)
         q.Empty() #måste rensa känkade listan
-        p.Empty() #måste rensa känkade listan
+        parantes.Empty() #måste rensa känkade listan
         main()
 
 
