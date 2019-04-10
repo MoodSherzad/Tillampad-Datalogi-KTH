@@ -131,7 +131,7 @@ def main():
 """
 
 
-def main():
+def main5():
 	kattisInput = sys.stdin.readline().strip() # väntar input
 	if kattisInput != "#":  # hashtag är en stoppkolss
 		output = readFormel(kattisInput)
