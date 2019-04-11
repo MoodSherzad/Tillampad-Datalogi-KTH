@@ -2,6 +2,7 @@ from linkedQFile import *
 import sys
 import string
 from molgrafik import *
+from L9v2 import *
 #from hashtest import *
 q = LinkedQ()
 parantes = LinkedQ()
@@ -16,6 +17,7 @@ atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
     'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 
 	'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
 
+<<<<<<< HEAD
 def atom_info():
     """Returnerar en dict med atomernas namn och vikt"""
     vikter = "H  1.00794, He 4.002602, Li 6.941, Be 9.012182, B  10.811, C  12.0107, N  14.0067, O  15.9994, F  18.9984032, Ne 20.1797, \
@@ -39,6 +41,9 @@ Bk 247, Cf 251, Es 252, Fm 257, Md 258, No 259, Lr 262, Rf 265, Db 268, Hs 270, 
     return atom_dict
 
 
+=======
+fellista = []
+>>>>>>> cd4bc5ca7b4cbcd5bd2d5c50c92ab70f54a50665
 class Syntaxfel(Exception):
 	pass
 
@@ -177,14 +182,17 @@ def main():
     atom_dict = atom_info()
     print(atom_dict)
 
-    
-    mg = Molgrafik()
-    if in_data != "q":  # hashtag är en stoppkolss
-        p = readFormel(in_data)
-        firstError()
-        mg.show(p)
-        q.Empty() #måste rensa känkade listan
-        parantes.Empty() #måste rensa känkade listan
+    if readFormel2(in_data) == "Formeln är syntaktiskt korrekt":
+        mg = Molgrafik()
+        if in_data != "q":  # hashtag är en stoppkolss
+            p = readFormel(in_data)
+            firstError()
+            mg.show(p)
+            q.Empty() #måste rensa känkade listan
+            parantes.Empty() #måste rensa känkade listan
+            main()
+    else:
+        print("Fel syntax testa igen")
         main()
         
 
