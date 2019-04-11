@@ -2,6 +2,7 @@ from linkedQFile import *
 import sys
 import string
 from molgrafik import *
+from L9v2 import *
 #from hashtest import *
 q = LinkedQ()
 parantes = LinkedQ()
@@ -16,6 +17,7 @@ atomLista = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
     'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 
 	'Mt', 'Ds', 'Rg', 'Cn', 'Fl', 'Lv']
 
+fellista = []
 class Syntaxfel(Exception):
 	pass
 
@@ -151,14 +153,17 @@ def main():
     else:
         in_data = "Si(C3(COOH)2)4(H2O)7"
 
-    
-    mg = Molgrafik()
-    if in_data != "q":  # hashtag är en stoppkolss
-        p = readFormel(in_data)
-        firstError()
-        mg.show(p)
-        q.Empty() #måste rensa känkade listan
-        parantes.Empty() #måste rensa känkade listan
+    if readFormel2(in_data) == "Formeln är syntaktiskt korrekt":
+        mg = Molgrafik()
+        if in_data != "q":  # hashtag är en stoppkolss
+            p = readFormel(in_data)
+            firstError()
+            mg.show(p)
+            q.Empty() #måste rensa känkade listan
+            parantes.Empty() #måste rensa känkade listan
+            main()
+    else:
+        print("Fel syntax testa igen")
         main()
         
 
